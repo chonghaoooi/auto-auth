@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      width: 340px;
+      background: #f3f3f3;
+      color: #1a1a1a;
+    }
+
+    .header {
+      background: #0078d4;
+      color: white;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header img { width: 36px; height: 36px; border-radius: 6px; }
+    .header h1 { font-size: 17px; font-weight: 700; }
+    .header p  { font-size: 11px; opacity: 0.85; margin-top: 2px; }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .status.ok   { background: #dff6dd; color: #107c10; }
+    .status.warn { background: #fff4ce; color: #835700; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .dot.green  { background: #107c10; }
+    .dot.orange { background: #d83b01; }
+
+    .card {
+      background: white;
+      margin: 10px;
+      border-radius: 8px;
+      padding: 14px 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    }
+    .card h2 {
+      font-size: 11px;
+      font-weight: 700;
+      color: #0078d4;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #444;
+      margin-top: 10px;
+      margin-bottom: 4px;
+    }
+    label:first-of-type { margin-top: 0; }
+    .hint { font-size: 11px; color: #888; margin-top: 3px; }
+
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
+      width: 100%;
+      padding: 7px 10px;
+      border: 1.5px solid #d0d0d0;
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: inherit;
+      transition: border-color .15s;
+    }
+    input:focus { outline: none; border-color: #0078d4; box-shadow: 0 0 0 2px #cce4f6; }
+
+    .toggle-pw {
+      position: relative;
+    }
+    .toggle-pw input { padding-right: 36px; }
+    .toggle-pw button {
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 34px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #666;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .save-btn {
+      width: 100%;
+      padding: 9px;
+      background: #0078d4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 14px;
+      transition: background .15s;
+    }
+    .save-btn:hover  { background: #006cc1; }
+    .save-btn:active { background: #005a9e; }
+
+    .msg {
+      text-align: center;
+      font-size: 12px;
+      margin-top: 7px;
+      min-height: 16px;
+    }
+
+    ol.steps { list-style: none; counter-reset: s; }
+    ol.steps li {
+      counter-increment: s;
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    ol.steps li:last-child { margin-bottom: 0; }
+    ol.steps li::before {
+      content: counter(s);
+      background: #0078d4;
+      color: white;
+      min-width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      margin-top: 1px;
+    }
+
+    .info-box {
+      background: #f0f6ff;
+      border-left: 3px solid #0078d4;
+      padding: 10px 12px;
+      border-radius: 0 4px 4px 0;
+      font-size: 11.5px;
+      line-height: 1.55;
+      color: #333;
+    }
+    .info-box b { color: #0078d4; }
+
+    footer {
+      text-align: center;
+      font-size: 10px;
+      color: #aaa;
+      padding: 6px 0 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <img src="icons/icon48.png" alt="">
+  <div>
+    <h1>SP Auto Auth</h1>
+    <p>Microsoft login automation for SP students</p>
+  </div>
+</div>
+
+<div class="status warn" id="statusBar">
+  <div class="dot orange" id="statusDot"></div>
+  <span id="statusText">Not configured — enter your details below</span>
+</div>
+
+<div class="card">
+  <h2>Your Details</h2>
+
+  <label for="email">SP Email</label>
+  <input type="email" id="email" placeholder="your.school@email.com">
+
+  <label for="password">Password</label>
+  <div class="toggle-pw">
+    <input type="password" id="password" placeholder="Your Microsoft password">
+    <button type="button" id="togglePw" title="Show/hide">👁</button>
+  </div>
+  <p class="hint">Stored locally on your device only — never sent anywhere.</p>
+
+  <label for="secret">Authenticator Secret Key</label>
+  <input type="text" id="secret" placeholder="e.g. ABCD1234EFGH5678" autocomplete="off" spellcheck="false">
+  <p class="hint">The secret code from your Microsoft Authenticator setup.</p>
+
+  <button class="save-btn" id="saveBtn">Save Settings</button>
+  <p class="msg" id="saveMsg"></p>
+</div>
+
+<div class="card">
+  <h2>How It Works</h2>
+  <ol class="steps">
+    <li>Fill in your details above and click <strong>Save Settings</strong></li>
+    <li>Open Outlook or Teams in your browser — log in as normal</li>
+    <li>Extension auto-fills email, password, and 2FA code instantly</li>
+    <li>You're signed in with no manual input needed</li>
+  </ol>
+</div>
+
+<div class="card">
+  <h2>How to Find Your Secret Key</h2>
+  <div class="info-box">
+    When setting up Microsoft Authenticator, choose
+    <b>"I want to use a different authenticator app"</b>. A QR code will appear —
+    click <b>"Can't scan image?"</b> to reveal the <b>secret key</b>
+    (a string of letters &amp; numbers). Copy that key here.<br><br>
+    If already set up, ask IT to reset your MFA so you can re-enroll and capture the key.
+  </div>
+</div>
+
+<footer>All data stored locally on your device &nbsp;·&nbsp; v2.0</footer>
+
+<script src="popup.js"></script>
+</body>
+</html>
