@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/github/v/release/chonghaoooi/SP-Auto-Authentication?style=flat-square&color=0078d4&label=release" alt="Release">
+  <a href="https://github.com/chonghaoooi/SP-Auto-Authentication/releases/latest"><img src="https://img.shields.io/badge/release-v1.0-0078d4?style=flat-square" alt="Release"></a>
   <img src="https://img.shields.io/badge/platform-Chrome%20%2F%20Edge-0078d4?style=flat-square" alt="Platform">
   <img src="https://img.shields.io/badge/manifest-v3-0078d4?style=flat-square" alt="Manifest v3">
   <img src="https://img.shields.io/badge/license-MIT-0078d4?style=flat-square" alt="MIT">
