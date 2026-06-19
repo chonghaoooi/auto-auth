@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="OutlookAutoAuth-Extension/icons/icon128.png" width="96" alt="SP Auto Auth">
+  <img src="OutlookAutoAuth-Extension/icons/auto-auth-128.png" width="96" alt="SP Auto Auth secure automatic sign-in icon">
 </p>
 
 <h1 align="center">SP Auto Auth</h1>
