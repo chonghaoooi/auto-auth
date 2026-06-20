@@ -1,19 +1,19 @@
 <p align="center">
-  <img src="OutlookAutoAuth-Extension/icons/auto-auth-128.png" width="96" alt="SP Auto Auth secure automatic sign-in icon">
+  <img src="OutlookAutoAuth-Extension/icons/auto-auth-128.png" width="96" alt="Auto Auth secure automatic sign-in icon">
 </p>
 
-<h1 align="center">SP Auto Auth</h1>
+<h1 align="center">Auto Auth</h1>
 
 <p align="center">
   <em>Open Outlook. Walk away. Come back signed in.</em>
 </p>
 
 <p align="center">
-  <a href="https://github.com/chonghaoooi/SP-Auto-Authentication/releases/latest"><img src="https://img.shields.io/badge/release-v1.0-0078d4?style=flat-square" alt="Release"></a>
+  <a href="https://github.com/chonghaoooi/auto-auth/releases/latest"><img src="https://img.shields.io/badge/release-v1.0-0078d4?style=flat-square" alt="Release"></a>
   <img src="https://img.shields.io/badge/platform-Chrome%20%2F%20Edge-0078d4?style=flat-square" alt="Platform">
   <img src="https://img.shields.io/badge/manifest-v3-0078d4?style=flat-square" alt="Manifest v3">
   <img src="https://img.shields.io/badge/license-MIT-0078d4?style=flat-square" alt="MIT">
-  <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fchonghaoooi%2FSP-Auto-Authentication&count_bg=%230078d4&title_bg=%23555555&title=views&edge_flat=true" alt="Views">
+  <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fchonghaoooi%2Fauto-auth&count_bg=%230078d4&title_bg=%23555555&title=views&edge_flat=true" alt="Views">
 </p>
 
 <p align="center">
@@ -26,7 +26,7 @@ Microsoft login has four screens. Every time. This extension handles all four â€
 
 ## Install
 
-1. Download **SP-Auto-Auth-v1.0.zip** from the [latest release](https://github.com/chonghaoooi/SP-Auto-Authentication/releases/latest) and extract it
+1. Download **SP-Auto-Auth-v1.0.zip** from the [latest release](https://github.com/chonghaoooi/auto-auth/releases/latest) and extract it
 2. Open Chrome and go to `chrome://extensions`
 3. Enable **Developer mode** (toggle, top right)
 4. Click **Load unpacked** â†’ select the `OutlookAutoAuth-Extension` folder
