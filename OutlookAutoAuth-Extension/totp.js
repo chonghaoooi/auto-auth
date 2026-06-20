@@ -20,6 +20,9 @@ function base32ToBytes(base32) {
 
 async function generateTOTP(secret) {
   const keyBytes = base32ToBytes(secret);
+  const now = Math.floor(Date.now() / 1000);
+  // ponytail: wait out last 2s of window so code doesn't expire mid-submit
+  if ((30 - (now % 30)) < 2) await new Promise(r => setTimeout(r, 2500));
   const timeStep = Math.floor(Date.now() / 1000 / 30);
 
   const counter = new ArrayBuffer(8);

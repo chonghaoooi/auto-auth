@@ -1,9 +1,10 @@
 // Auto-fills Microsoft login pages for SP Outlook / Teams
 // Settings (email, password, secret) loaded from chrome.storage.local
 
-const DELAY_MS = 600;
+const DELAY_MS = 250;
 
 let busy = false;
+let pendingRun = false;
 
 function sleep(ms) {
   return new Promise(r => setTimeout(r, ms));
@@ -33,7 +34,7 @@ async function waitFor(selector, timeoutMs = 6000) {
   while (Date.now() - start < timeoutMs) {
     const el = document.querySelector(selector);
     if (visible(el)) return el;
-    await sleep(200);
+    await sleep(100);
   }
   return null;
 }
@@ -71,7 +72,7 @@ async function doRun() {
     if (password) {
       fill(pwField, password);
     } else {
-      await sleep(800); // wait for browser autofill
+      await sleep(400); // wait for browser autofill
     }
     if (pwField.value) {
       await sleep(DELAY_MS);
@@ -137,12 +138,14 @@ async function doRun() {
 }
 
 async function run() {
-  if (busy) return;
+  if (busy) { pendingRun = true; return; }
   busy = true;
+  pendingRun = false;
   try {
     await doRun();
   } finally {
     busy = false;
+    if (pendingRun) { pendingRun = false; setTimeout(run, 0); }
   }
 }
 
@@ -150,7 +153,7 @@ async function run() {
 let debounceTimer = null;
 const obs = new MutationObserver(() => {
   clearTimeout(debounceTimer);
-  debounceTimer = setTimeout(run, 600);
+  debounceTimer = setTimeout(run, 150);
 });
 obs.observe(document.documentElement, { childList: true, subtree: true });
 

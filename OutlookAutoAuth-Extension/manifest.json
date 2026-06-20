@@ -28,7 +28,7 @@
         "https://outlook.office365.com/*"
       ],
       "js": ["totp.js", "content.js"],
-      "run_at": "document_idle",
+      "run_at": "document_end",
       "all_frames": true
     }
   ]
