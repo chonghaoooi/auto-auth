@@ -13,7 +13,7 @@
   <img src="https://img.shields.io/badge/platform-Chrome%20%2F%20Edge-0078d4?style=flat-square" alt="Platform">
   <img src="https://img.shields.io/badge/manifest-v3-0078d4?style=flat-square" alt="Manifest v3">
   <img src="https://img.shields.io/badge/license-MIT-0078d4?style=flat-square" alt="MIT">
-  <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fchonghaoooi%2Fauto-auth&count_bg=%230078d4&title_bg=%23555555&title=views&edge_flat=true" alt="Views">
+  <img src="https://visitor-badge.laobi.icu/badge?page_id=chonghaoooi.auto-auth&left_color=%23555555&right_color=%230078d4&left_text=views" alt="Views">
 </p>
 
 <p align="center">
