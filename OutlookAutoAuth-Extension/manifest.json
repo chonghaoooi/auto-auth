@@ -1,12 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "SP Auto Auth",
-  "version": "2.0",
-  "description": "Automatically fills Microsoft login for SP Outlook and Teams",
+  "name": "Auto Auth",
+  "version": "2.0.0",
+  "description": "Automatically completes Microsoft sign-in and GitHub TOTP two-factor prompts",
   "permissions": ["storage"],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "SP Auto Auth Settings",
+    "default_title": "Auto Auth Settings",
     "default_icon": {
       "16": "icons/auto-auth-16.png",
       "48": "icons/auto-auth-48.png",

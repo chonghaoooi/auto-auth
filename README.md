@@ -5,86 +5,87 @@
 <h1 align="center">Auto Auth</h1>
 
 <p align="center">
-  <em>Open Outlook. Walk away. Come back signed in.</em>
+  <em>Automatic Microsoft sign-in and GitHub TOTP completion for Chrome and Edge.</em>
 </p>
 
 <p align="center">
-  <a href="https://github.com/chonghaoooi/auto-auth/releases/latest"><img src="https://img.shields.io/badge/release-v1.0-0078d4?style=flat-square" alt="Release"></a>
-  <img src="https://img.shields.io/badge/platform-Chrome%20%2F%20Edge-0078d4?style=flat-square" alt="Platform">
+  <a href="https://github.com/chonghaoooi/auto-auth/releases/latest"><img src="https://img.shields.io/github/v/release/chonghaoooi/auto-auth?style=flat-square&color=0078d4" alt="Latest release"></a>
+  <img src="https://img.shields.io/badge/platform-Chrome%20%2F%20Edge-0078d4?style=flat-square" alt="Chrome and Edge">
   <img src="https://img.shields.io/badge/manifest-v3-0078d4?style=flat-square" alt="Manifest v3">
-  <img src="https://img.shields.io/badge/license-MIT-0078d4?style=flat-square" alt="MIT">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-0078d4?style=flat-square" alt="MIT license"></a>
   <img src="https://visitor-badge.laobi.icu/badge?page_id=chonghaoooi.auto-auth&left_color=%23555555&right_color=%230078d4&left_text=views" alt="Views">
 </p>
 
-<p align="center">
-  <strong>Auto-fills email · password · 2FA code · stay signed in</strong>
-</p>
+Auto Auth is a local-only browser extension that completes Microsoft sign-in flows and GitHub authenticator-code prompts. It can fill your Microsoft email, password, TOTP code, and “Stay signed in?” prompt, plus generate a separate TOTP code for GitHub two-factor authentication.
 
----
+## Features
 
-Microsoft login has four screens. Every time. This extension handles all four — silently, instantly, every time you open Outlook or Teams in your browser.
+- Microsoft sign-in automation for Outlook and Teams
+- GitHub TOTP two-factor code completion
+- Separate Microsoft and GitHub authenticator secrets
+- Manifest V3 support for Chrome and Edge
+- Credentials remain in `chrome.storage.local`; no analytics or external service
+- TypeScript source with reproducible compiled extension files
 
 ## Install
 
-1. Download **SP-Auto-Auth-v1.0.zip** from the [latest release](https://github.com/chonghaoooi/auto-auth/releases/latest) and extract it
-2. Open Chrome and go to `chrome://extensions`
-3. Enable **Developer mode** (toggle, top right)
-4. Click **Load unpacked** → select the `OutlookAutoAuth-Extension` folder
-5. Click the lock icon in your toolbar and enter your details
+1. Download **Auto-Auth-v2.0.0.zip** from the [latest release](https://github.com/chonghaoooi/auto-auth/releases/latest).
+2. Extract the archive.
+3. Open `chrome://extensions` in Chrome or `edge://extensions` in Edge.
+4. Enable **Developer mode**.
+5. Select **Load unpacked** and choose the extracted `OutlookAutoAuth-Extension` folder.
+6. Open the Auto Auth extension and save your settings.
 
-## Setup
+## Configure
 
-Click the extension icon and fill in three fields:
+| Field | Purpose | Required |
+|---|---|---|
+| **Microsoft Email** | Microsoft account email | Yes for Microsoft automation |
+| **Password** | Microsoft account password | Optional; browser autofill can provide it |
+| **Microsoft Authenticator Secret Key** | Generates Microsoft TOTP codes | Yes for Microsoft automation |
+| **GitHub Authenticator Secret Key** | Generates GitHub TOTP codes | Optional |
 
-| Field | What to enter |
-|---|---|
-| **SP Email** | Your school Microsoft email |
-| **Password** | Your Microsoft password |
-| **Authenticator Secret Key** | The secret from your MFA setup (see below) |
+Authenticator apps expose a secret key during TOTP setup. For Microsoft, choose **I want to use a different authenticator app**, then **Can't scan image?**. For GitHub, open **Settings → Password and authentication → Two-factor authentication** and use the setup key shown during authenticator configuration.
 
-Hit **Save Settings**. Done.
-
-## Finding your secret key
-
-When setting up Microsoft Authenticator, choose **"I want to use a different authenticator app"**. A QR code appears — click **"Can't scan image?"** to reveal the secret key (a string of letters and numbers). That's what goes in the field above.
-
-> Already set up and don't have the key? Ask IT to reset your MFA so you can re-enrol and capture it.
+> Treat authenticator secrets like passwords. Anyone with a secret can generate valid codes. If you no longer have the original setup key, reset that account's authenticator configuration and enrol it again.
 
 ## How it works
 
-Every 30 seconds, your authenticator secret + the current time are fed into HMAC-SHA1. The result is carved down to 6 digits. Microsoft runs the same math on their end — matching codes = you're in.
+Every 30 seconds, Auto Auth derives a six-digit TOTP code from the saved secret and current time using HMAC-SHA1. The extension watches supported sign-in pages and reacts to page transitions, including single-page application updates that do not reload the URL.
 
-The extension watches for Microsoft login pages and handles each screen automatically:
+Microsoft flow:
 
+```text
+Email field        → fills email → submits
+Password field     → fills saved or browser-provided password → submits
+Authenticator push → switches to verification-code entry
+TOTP field         → generates code → submits
+Stay signed in?    → confirms
 ```
-Email field detected     → fills your email → submits
-Password field detected  → fills password   → submits
-Push notification screen → clicks "I can't use Authenticator right now"
-TOTP field detected      → generates 6-digit code → submits
-"Stay signed in?" prompt → clicks Yes
+
+GitHub flow:
+
+```text
+Two-factor page → generates the GitHub TOTP code → submits
 ```
 
-A MutationObserver catches SPA-style transitions where the URL doesn't change, so it works even when Microsoft updates the page without a full reload.
+## Development
 
-## Privacy
+Requirements: Node.js and npm.
 
-- All credentials stored locally via `chrome.storage.local`
-- Nothing is sent to any server
-- No analytics, no tracking
+```bash
+npm ci
+npm run build
+```
 
-## FAQ
+Edit the TypeScript files under `src/`. The build compiles them into `OutlookAutoAuth-Extension/`, which is the directory loaded by the browser.
 
-**Does it work for both Outlook and Teams?**
-Yes. Any page on `login.microsoftonline.com` or `login.microsoft.com`.
+## Privacy and security
 
-**What if I don't have my secret key?**
-The extension won't work without it. You need to capture it during MFA enrolment.
-
-**Does it work if my browser already autofills the password?**
-Yes — if no password is saved in the extension, it waits for the browser to autofill and then submits.
-
-**Is it safe to store my password in the extension?**
-It is stored in Chrome's local extension storage, which is sandboxed to this extension only. It never leaves your device.
+- Auto Auth does not send credentials, secrets, or usage data to a project-controlled server.
+- Settings are stored in the browser profile through `chrome.storage.local`.
+- Local extension storage is not a password manager or hardware-backed secret store. Protect your operating-system account and browser profile.
+- Review the source and requested site access before installing any unpacked extension that handles credentials.
 
 ## License
 
