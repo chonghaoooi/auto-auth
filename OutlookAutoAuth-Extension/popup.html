@@ -189,9 +189,13 @@
   </div>
   <p class="hint">Stored locally on your device only — never sent anywhere.</p>
 
-  <label for="secret">Authenticator Secret Key</label>
+  <label for="secret">Microsoft Authenticator Secret Key</label>
   <input type="text" id="secret" placeholder="e.g. ABCD1234EFGH5678" autocomplete="off" spellcheck="false">
   <p class="hint">The secret code from your Microsoft Authenticator setup.</p>
+
+  <label for="githubSecret">GitHub Authenticator Secret Key <span style="font-weight:400;color:#aaa">(optional)</span></label>
+  <input type="text" id="githubSecret" placeholder="GitHub TOTP secret (optional)" autocomplete="off" spellcheck="false">
+  <p class="hint">From GitHub → Settings → Password and authentication → TOTP setup.</p>
 
   <button class="save-btn" id="saveBtn">Save Settings</button>
   <p class="msg" id="saveMsg"></p>

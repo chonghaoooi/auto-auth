@@ -25,7 +25,8 @@
         "https://login.microsoft.com/*",
         "https://outlook.cloud.microsoft/*",
         "https://outlook.office.com/*",
-        "https://outlook.office365.com/*"
+        "https://outlook.office365.com/*",
+        "https://github.com/sessions/two-factor*"
       ],
       "js": ["totp.js", "content.js"],
       "run_at": "document_end",
