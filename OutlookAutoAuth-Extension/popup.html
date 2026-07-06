@@ -167,7 +167,7 @@
   <img src="icons/auto-auth-48.png" alt="Auto Auth">
   <div>
     <h1>Auto Auth</h1>
-    <p>Microsoft and GitHub sign-in automation</p>
+    <p>Microsoft sign-in automation</p>
   </div>
 </div>
 
@@ -192,10 +192,7 @@
   <label for="secret">Microsoft Authenticator Secret Key</label>
   <input type="text" id="secret" placeholder="e.g. ABCD1234EFGH5678" autocomplete="off" spellcheck="false">
   <p class="hint">The secret code from your Microsoft Authenticator setup.</p>
-
-  <label for="githubSecret">GitHub Authenticator Secret Key <span style="font-weight:400;color:#aaa">(optional)</span></label>
-  <input type="text" id="githubSecret" placeholder="GitHub TOTP secret (optional)" autocomplete="off" spellcheck="false">
-  <p class="hint">From GitHub → Settings → Password and authentication → TOTP setup.</p>
+  <p class="hint">Current 6-digit code: <span id="liveCode" style="font-weight:700;color:#0078d4;letter-spacing:1px">——— ———</span></p>
 
   <button class="save-btn" id="saveBtn">Save Settings</button>
   <p class="msg" id="saveMsg"></p>
@@ -205,7 +202,7 @@
   <h2>How It Works</h2>
   <ol class="steps">
     <li>Fill in your details above and click <strong>Save Settings</strong></li>
-    <li>Open Outlook, Teams, or a GitHub two-factor prompt</li>
+    <li>Open Outlook or Teams sign-in</li>
     <li>The extension completes the configured sign-in steps automatically</li>
     <li>You're signed in with no manual input needed</li>
   </ol>
@@ -222,8 +219,9 @@
   </div>
 </div>
 
-<footer>All data stored locally on your device &nbsp;·&nbsp; v2.0.0</footer>
+<footer>All data stored locally on your device &nbsp;·&nbsp; v2.0.1</footer>
 
+<script src="totp.js"></script>
 <script src="popup.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 "use strict";
-// Auto-fills Microsoft + GitHub login pages
+// Auto-fills Microsoft login pages
 // Settings loaded from chrome.storage.local
 const DELAY_MS = 250;
 let busy = false;
@@ -35,26 +35,10 @@ async function waitFor(selector, timeoutMs = 6000) {
     return null;
 }
 function getSettings() {
-    return new Promise(resolve => chrome.storage.local.get(['email', 'secret', 'password', 'githubSecret'], items => resolve(items)));
-}
-async function handleGitHub(githubSecret) {
-    const otpField = await waitFor("input[name='app_otp'], input[name='otp'], input#app_totp, input[autocomplete='one-time-password']");
-    if (!otpField)
-        return;
-    fill(otpField, await generateTOTP(githubSecret));
-    await sleep(DELAY_MS);
-    // GitHub auto-submits on valid input; click submit as fallback
-    click("input[type='submit'], button[type='submit']");
+    return new Promise(resolve => chrome.storage.local.get(['email', 'secret', 'password'], items => resolve(items)));
 }
 async function doRun() {
-    const { email, secret, password, githubSecret } = await getSettings();
-    // ── GitHub 2FA ────────────────────────────────────────────────
-    if (window.location.hostname === "github.com") {
-        if (githubSecret)
-            await handleGitHub(githubSecret);
-        return;
-    }
-    // ── Microsoft flow ────────────────────────────────────────────
+    const { email, secret, password } = await getSettings();
     if (!email || !secret)
         return;
     // Step 1: email

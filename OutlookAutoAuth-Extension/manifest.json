@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Auto Auth",
-  "version": "2.0.0",
-  "description": "Automatically completes Microsoft sign-in and GitHub TOTP two-factor prompts",
+  "version": "2.0.1",
+  "description": "Automatically completes Microsoft sign-in and TOTP two-factor prompts",
   "permissions": ["storage"],
   "action": {
     "default_popup": "popup.html",
@@ -25,8 +25,7 @@
         "https://login.microsoft.com/*",
         "https://outlook.cloud.microsoft/*",
         "https://outlook.office.com/*",
-        "https://outlook.office365.com/*",
-        "https://github.com/sessions/two-factor*"
+        "https://outlook.office365.com/*"
       ],
       "js": ["totp.js", "content.js"],
       "run_at": "document_end",

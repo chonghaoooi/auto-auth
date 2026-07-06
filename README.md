@@ -5,7 +5,7 @@
 <h1 align="center">Auto Auth</h1>
 
 <p align="center">
-  <em>Automatic Microsoft sign-in and GitHub TOTP completion for Chrome and Edge.</em>
+  <em>Automatic Microsoft sign-in and TOTP completion for Chrome and Edge.</em>
 </p>
 
 <p align="center">
@@ -16,20 +16,19 @@
   <img src="https://visitor-badge.laobi.icu/badge?page_id=chonghaoooi.auto-auth&left_color=%23555555&right_color=%230078d4&left_text=views" alt="Views">
 </p>
 
-Auto Auth is a local-only browser extension that completes Microsoft sign-in flows and GitHub authenticator-code prompts. It can fill your Microsoft email, password, TOTP code, and “Stay signed in?” prompt, plus generate a separate TOTP code for GitHub two-factor authentication.
+Auto Auth is a local-only browser extension that completes Microsoft sign-in flows. It can fill your Microsoft email, password, TOTP code, and “Stay signed in?” prompt.
 
 ## Features
 
 - Microsoft sign-in automation for Outlook and Teams
-- GitHub TOTP two-factor code completion
-- Separate Microsoft and GitHub authenticator secrets
+- Live 6-digit code shown in the popup for manual entry elsewhere
 - Manifest V3 support for Chrome and Edge
 - Credentials remain in `chrome.storage.local`; no analytics or external service
 - TypeScript source with reproducible compiled extension files
 
 ## Install
 
-1. Download **Auto-Auth-v2.0.0.zip** from the [latest release](https://github.com/chonghaoooi/auto-auth/releases/latest).
+1. Download **Auto-Auth-v2.0.1.zip** from the [latest release](https://github.com/chonghaoooi/auto-auth/releases/latest).
 2. Extract the archive.
 3. Open `chrome://extensions` in Chrome or `edge://extensions` in Edge.
 4. Enable **Developer mode**.
@@ -43,9 +42,8 @@ Auto Auth is a local-only browser extension that completes Microsoft sign-in flo
 | **Microsoft Email** | Microsoft account email | Yes for Microsoft automation |
 | **Password** | Microsoft account password | Optional; browser autofill can provide it |
 | **Microsoft Authenticator Secret Key** | Generates Microsoft TOTP codes | Yes for Microsoft automation |
-| **GitHub Authenticator Secret Key** | Generates GitHub TOTP codes | Optional |
 
-Authenticator apps expose a secret key during TOTP setup. For Microsoft, choose **I want to use a different authenticator app**, then **Can't scan image?**. For GitHub, open **Settings → Password and authentication → Two-factor authentication** and use the setup key shown during authenticator configuration.
+Authenticator apps expose a secret key during TOTP setup. Choose **I want to use a different authenticator app**, then **Can't scan image?**, to reveal it.
 
 > Treat authenticator secrets like passwords. Anyone with a secret can generate valid codes. If you no longer have the original setup key, reset that account's authenticator configuration and enrol it again.
 
@@ -61,12 +59,6 @@ Password field     → fills saved or browser-provided password → submits
 Authenticator push → switches to verification-code entry
 TOTP field         → generates code → submits
 Stay signed in?    → confirms
-```
-
-GitHub flow:
-
-```text
-Two-factor page → generates the GitHub TOTP code → submits
 ```
 
 ## Development
