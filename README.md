@@ -53,6 +53,13 @@ Every 30 seconds, Auto Auth derives a six-digit TOTP code from the saved secret 
 
 Microsoft flow:
 
+Outlook and Teams may start with a phone-notification prompt. Auto Auth chooses
+**Use your password instead** when Microsoft offers it, then continues with the
+saved or browser-filled password and authenticator verification code. If no
+password alternative is available, complete that prompt manually.
+On the account picker, Auto Auth selects the remembered account matching your
+configured email address. Other accounts are left for you to choose manually.
+
 ```text
 Email field        → fills email → submits
 Password field     → fills saved or browser-provided password → submits
@@ -68,6 +75,7 @@ Requirements: Node.js and npm.
 ```bash
 npm ci
 npm run build
+npm test
 ```
 
 Edit the TypeScript files under `src/`. The build compiles them into `OutlookAutoAuth-Extension/`, which is the directory loaded by the browser.

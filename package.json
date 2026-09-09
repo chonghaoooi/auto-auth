@@ -1,12 +1,14 @@
 {
   "name": "auto-auth",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "private": true,
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "npm run build && node --test tests/*.test.cjs"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.320",
+    "jsdom": "^30.0.1",
     "typescript": "^5.5.0"
   }
 }
